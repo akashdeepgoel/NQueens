@@ -111,7 +111,7 @@ function board_click(event)
 	var matrix_number = (row_number-1)*8 + column_number;
 	if(valid[matrix_number]==0)
 	{
-		alert("Game Over,It will start again!f");
+		alert("Game Over,It will start again!");
 		draw();
 	}
 	else
