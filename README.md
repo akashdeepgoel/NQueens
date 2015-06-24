@@ -1,8 +1,8 @@
-Welcome!
+<strong>Welcome!</strong>
 
 Currently the game supports 8 x 8 board only.I will be adding levels containing different sized boards.
 
-<strong>Upcoming Features:<strong><br>
+<strong>Upcoming Features:</strong><br>
 1. Better Graphics<br>
 2. Music<br>
 3. Levels 
