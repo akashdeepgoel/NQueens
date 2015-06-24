@@ -8,6 +8,7 @@ var BLOCK_COLOUR_1 = '#000000',
 	HIGHLIGHT_COLOUR = '#fb0006';
 var valid=[];
 var PIECE_QUEEN = 4;
+var CLICK_COUNT=0;
 var json = 
     {
         "white": 
@@ -26,6 +27,7 @@ var json =
 function draw()
 {
 	//alert("Hello");
+	CLICK_COUNT=0;
 	for(vrow=0;vrow<=100;vrow++)
 	{
 		valid[vrow]=1;
@@ -35,6 +37,8 @@ function draw()
 	if(canvas.getContext)
 	{
 		context = canvas.getContext('2d');
+		//context.canvas.width = window.innerWidth;
+		//context.canvas.height = window.innerHeight;
 
 		BLOCK_SIZE = canvas.height / NUMBER_OF_ROWS;
 		// Draw Background
@@ -107,7 +111,7 @@ function board_click(event)
 	var row_number = (800-y)/100 + 1;
 	column_number=parseInt(column_number);
 	row_number = parseInt(row_number);
-	//alert("Came HERE");
+	//alert(row_number+","+column_number);
 	var matrix_number = (row_number-1)*8 + column_number;
 	if(valid[matrix_number]==0)
 	{
@@ -116,62 +120,72 @@ function board_click(event)
 	}
 	else
 	{
-		var curr = row_number;
-		var cucc = column_number;
-		curr=parseInt(curr);
-		cucc=parseInt(cucc);
-		var check = curr+cucc;
-		var cl=x/100;
-		var rw=y/100;
-		cl=parseInt(cl);
-		rw=parseInt(rw);
-		drawPiece(check,cl,rw);
-		var matrix_number = (curr-1)*8 + cucc;
-		valid[matrix_number]=0;
-		for(num=1;num<=8;num++)
+		CLICK_COUNT++;
+		if(CLICK_COUNT===8)
 		{
-			var matrix_number = (curr-1)*8 + num;
-			valid[matrix_number]=0;
-		}	
-		for(num=1;num<=8;num++)
-		{
-			var matrix_number = (num-1)*8 + cucc;
-			valid[matrix_number]=0;
+			alert("Woohoo! You Won!! :-)");
+			draw();
 		}
-		while(curr!=8 && cucc!=8)
+		else
 		{
-			//alert("Here as well");
-			curr++;
-			cucc++;
+			var curr = row_number;
+			var cucc = column_number;
+			curr=parseInt(curr);
+			cucc=parseInt(cucc);
+			var check = curr+cucc;
+			var cl=x/100;
+			var rw=y/100;
+			cl=parseInt(cl);
+			rw=parseInt(rw);
+			drawPiece(check,cl,rw);
 			var matrix_number = (curr-1)*8 + cucc;
-			valid[matrix_number]=0;
-		}
-		curr=parseInt(row_number);
-		cucc=parseInt(column_number);
-		while(curr!=0 && cucc!=0)
-		{
-			curr--;
-			cucc--;
-			var matrix_number = (curr-1)*8 + cucc;
-			valid[matrix_number]=0;
-		}
-		curr=parseInt(row_number);
-		cucc=parseInt(column_number);
-		while(curr!=0 && cucc!=8)
-		{
-			curr--;
-			cucc++;
-			var matrix_number = (curr-1)*8 + cucc;
-			valid[matrix_number]=0;
-		}
-		curr=parseInt(row_number);
-		cucc=parseInt(column_number);
-		while(curr!=8 && cucc!=0)
-		{
-			curr++;
-			cucc--;
-			var matrix_number = (curr-1)*8 + cucc;
-			valid[matrix_number]=0;
+			//valid[matrix_number]=0;
+			for(num=1;num<=8;num++)
+			{
+				var matrix_number = (curr-1)*8 + num;
+				valid[matrix_number]=0;
+			}	
+			for(num=1;num<=8;num++)
+			{
+				var matrix_number = (num-1)*8 + cucc;
+				valid[matrix_number]=0;
+			}
+			while(curr!=8 && cucc!=8)
+			{
+				//alert("Here as well");
+				curr++;
+				cucc++;
+				var matrix_number = (curr-1)*8 + cucc;
+				valid[matrix_number]=0;
+			}
+			curr=parseInt(row_number);
+			cucc=parseInt(column_number);
+			while(curr!=1 && cucc!=1)
+			{
+				curr--;
+				cucc--;
+				var matrix_number = (curr-1)*8 + cucc;
+				valid[matrix_number]=0;
+			}
+			curr=parseInt(row_number);
+			cucc=parseInt(column_number);
+			while(curr!=1 && cucc!=8)
+			{
+				curr--;
+				cucc++;
+				var matrix_number = (curr-1)*8 + cucc;
+				valid[matrix_number]=0;
+			}
+			curr=parseInt(row_number);
+			cucc=parseInt(column_number);
+			while(curr!=8 && cucc!=1)
+			{
+				curr++;
+				cucc--;
+				var matrix_number = (curr-1)*8 + cucc;
+				//alert("Zeroing" + " " + matrix_number);
+				valid[matrix_number]=0;
+			}
 		}
 	}
 }
